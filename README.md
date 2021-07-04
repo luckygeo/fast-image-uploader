@@ -1,7 +1,7 @@
 # fast-image-uploader
 a fast image uploader
 
-快速上传图片至SM.MS图床，用C语言编写，完全开源 ，底层使用libcurl上传，支持macOS和Linux，后期考虑增加支持其它图床
+快速上传图片至SM.MS图床，支持多个图片上传，用C语言编写，完全开源 ，底层使用libcurl上传，支持macOS和Linux
 
 ## How
 
@@ -26,12 +26,12 @@ macOS需要安装`Command Line Tools`,安装后会有命令行clang编译器，�
 #### Use in CLI
 
 ```shell
-./uploader filepath
+./uploader filepath1 filepath2
 ```
 
 例如上传 位置在`/user/a/a.png`的图片 ，则执行 `./uploader /user/a/a.png`
 
-#### work with typroa
+#### Work with typroa
 
 在Typora图像设置中，上传服务选择`Custom Command `,自定义命令指向编译好的二进制文件uploader全路径即可
 

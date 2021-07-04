@@ -55,23 +55,24 @@ void nukechar(char s[], char c)
 
 int main(int arg, char **argv) {
 
-    curl_version_info_data  *data = curl_version_info( CURLVERSION_NOW );
-    int     a;
-    for ( a = 1; a < arg; a++ )
-    {
+    //输出curl version------------------
+    //curl_version_info_data  *data = curl_version_info( CURLVERSION_NOW );
+    //int     a;
+    //for ( a = 1; a < arg; a++ )
+    //{
         //printf( "%s\n", argv[a] );
-    }
+    //}
     /* 开始没有加const 编译器警告 curl.c:11:8: warning: initializing 'char *' with an expression of type 'const char *' */
-    const char *ver = data->version;
-    int length = strlen( ver );
+    //const char *ver = data->version;
+    //int length = strlen( ver );
     //printf( "curl version:" );
 
-    for ( a = 0; a < length; a++ )
-    {
+    //for ( a = 0; a < length; a++ )
+    //{
         //putchar( ver[a] );
-    }
+    //}
     //printf( "\n" );
-
+    //去掉输出 url verison----------------
     CURL      *curl;
     CURLcode    res;
     struct curl_slist *headerlist = NULL;
@@ -85,6 +86,7 @@ int main(int arg, char **argv) {
     int cflags=REG_EXTENDED | REG_ICASE;
     char ebuff[256];
 
+    int   a;
     int ret;
     regex_t reg;
     regmatch_t rm[5];
@@ -99,10 +101,11 @@ int main(int arg, char **argv) {
         regfree(&reg);
         return 1;
     }
-
+    printf( "Upload Success:\n");
     for ( a = 1; a < arg; a++ ) {
         curl_global_init(CURL_GLOBAL_ALL);
         curl = curl_easy_init();
+        
         /* Fill in the file upload field */
         curl_formadd(&post,
                      &last,
@@ -123,7 +126,6 @@ int main(int arg, char **argv) {
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist );
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
-
         /* Perform the request, res will get the return code */
         res = curl_easy_perform( curl );
         if ( res != CURLE_OK ) {
@@ -151,7 +153,6 @@ int main(int arg, char **argv) {
                 if (rm[i].rm_so > -1)
                 {
                     part_str = strndup(chunk.memory+rm[i].rm_so, rm[i].rm_eo-rm[i].rm_so);
-                    printf( "Upload Success:\n");
                     nukechar(part_str,'\\');
                     printf("%s\n", part_str);
                     free(part_str);
@@ -160,16 +161,13 @@ int main(int arg, char **argv) {
 
                 }
             }
-
             //printf("%s\n", chunk.memory);
         }
-        /* always cleanup */
-        curl_formfree(post);
-        curl_easy_cleanup( curl );
-        curl_slist_free_all( headerlist );
-        free(chunk.memory);
-
     }
+    /* always cleanup */
+    curl_formfree(post);
+    curl_easy_cleanup( curl );
+    curl_slist_free_all( headerlist );
+    free(chunk.memory);
     return 0;
-
 }
