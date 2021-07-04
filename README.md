@@ -1,7 +1,7 @@
 # fast-image-uploader
 a fast image uploader
 
-快速上传图片至SM.MS图床，支持多个图片上传，用C语言编写，完全开源 ，底层使用libcurl上传，支持macOS和Linux
+快速上传图片至SM.MS图床，支持多个图片上传，可以作为**Typora**的图片上传插件使用，C语言编写，完全开源 ，底层使用libcurl上传，可支持macOS和Linux
 
 ## How
 
